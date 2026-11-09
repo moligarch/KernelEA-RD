@@ -1,0 +1,63 @@
+; =========================================================================
+; EaDemo.inf
+;
+; Installation INF for the Kernel EA Demo Driver.
+; Root-enumerated WDM driver, Hardware ID: Root\EaDemo
+;
+; Install with:
+;   devcon install EaDemo.inf Root\EaDemo
+; or:
+;   pnputil /add-driver EaDemo.inf /install
+;   devcon update  EaDemo.inf Root\EaDemo
+; =========================================================================
+
+[Version]
+Signature              = "$WINDOWS NT$"
+Class                  = System
+ClassGuid              = {4d36e97d-e325-11ce-bfc1-08002be10318}
+Provider               = %ProviderName%
+CatalogFile            = EaDemo.cat
+DriverVer              = 11/09/2026,1.0.0.0
+PnpLockdown            = 1
+
+; =========================================================================
+[DestinationDirs]
+DefaultDestDir         = 12
+
+[SourceDisksNames]
+1 = %DiskName%,,,""
+
+[SourceDisksFiles]
+EaDemo.sys = 1,,
+
+; =========================================================================
+[Manufacturer]
+%MfgName% = MV,NTamd64
+
+[MV.NTamd64]
+%EaDemo.DeviceDesc% = EaDemo_Install, Root\EaDemo
+
+; =========================================================================
+[EaDemo_Install.NT]
+CopyFiles              = EaDemo_CopyFiles
+
+[EaDemo_Install.NT.Services]
+AddService             = EaDemo, 0x00000002, EaDemo_Service_Install
+
+[EaDemo_CopyFiles]
+EaDemo.sys,,,0
+
+[EaDemo_Service_Install]
+DisplayName            = %EaDemo.ServiceDesc%
+ServiceType            = 1
+StartType              = 3
+ErrorControl           = 1
+ServiceBinary          = %12%\EaDemo.sys
+
+; =========================================================================
+[Strings]
+ProviderName           = "MV"
+MfgName                = "MV"
+DiskName               = "EaDemo Installation Media"
+EaDemo.DeviceDesc      = "Kernel EA Demo Driver"
+EaDemo.ServiceDesc     = "Kernel EA Demo Driver"

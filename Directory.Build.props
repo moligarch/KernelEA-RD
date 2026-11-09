@@ -1,0 +1,15 @@
+<Project>
+    <PropertyGroup>
+		<PlatformShortName Condition="'$(Platform)'=='Win32'">x86</PlatformShortName>
+        <PlatformShortName Condition="'$(Platform)'=='x64'">x64</PlatformShortName>
+        <SolutionDir Condition="'$(SolutionDir)' == ''">$(MSBuildThisFileDirectory)</SolutionDir>
+        <OutDir>$(SolutionDir)build\bin\$(PlatformShortName)\$(Configuration)\</OutDir>
+        <IntDir>$(SolutionDir)build\obj\$(MSBuildProjectName)\$(PlatformShortName)\$(Configuration)\</IntDir>
+    </PropertyGroup>
+	
+	<ItemDefinitionGroup>
+		<ClCompile>     
+			<LanguageStandard>stdcpp17</LanguageStandard>
+		</ClCompile>
+	</ItemDefinitionGroup>
+</Project>
